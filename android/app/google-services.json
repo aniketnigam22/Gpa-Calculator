@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "316996859876",
+    "project_id": "gpacalculator-debd0",
+    "storage_bucket": "gpacalculator-debd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316996859876:android:46c3520fa41f6cd222f9f1",
+        "android_client_info": {
+          "package_name": "com.gpacalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316996859876-vbiprj63pep7avdesqbljjh60bdeqee2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3OnSOErHZ96zjj1J-Kk1VmY8POMZYA1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316996859876-vbiprj63pep7avdesqbljjh60bdeqee2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
