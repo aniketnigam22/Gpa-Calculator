@@ -1,70 +1,71 @@
-import {
-  Image, StyleSheet, Text, TouchableOpacity,
-  View, Pressable
-} from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GoogleSignin, statusCodes } from
-  '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SplashScreen from './src/screen/SplashScreen';
+import HomeScreen from './src/screen/HomeScreen';
+import OnboardingScreen from './src/screen/OnboardingScreen';
+import SpgaToP from './src/screen/SpgaToP';
+import CgpaToP from './src/screen/CgpaToP';
 
 const App = () => {
-  const [signInInProgress, setSignInInProgress] = useState(false);
+  // const [signInInProgress, setSignInInProgress] = useState(false);
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '316996859876-vbiprj63pep7avdesqbljjh60bdeqee2.apps.googleusercontent.com',
-    });
-  }, []);
+  // useEffect(() => {
 
-  const signIn = async () => {
-    if (signInInProgress) return; // Prevent multiple sign-in attempts
+  //   GoogleSignin.configure(
+  //     {
 
-    setSignInInProgress(true);
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      await GoogleSignin.revokeAccess();
-      console.warn(userInfo.user);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // User cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log(error);
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log(error);
-      } else {
-        console.log(error);
-      }
-    } finally {
-      setSignInInProgress(false); // Reset the flag after the sign-in attempt is complete
-    }
-  };
+  //       androidClientId: '316996859876-tbkoovbjjaljj7qsfumhh46bqtov9ru9.apps.googleusercontent.com',
+  //       iosClientId: "",
+  //       scopes: ['profile', 'email']
+  //     });
+  // }, []);
 
+  // const signIn = async () => {
+  //   if (signInInProgress) return; // Prevent multiple sign-in attempts
+
+  //   setSignInInProgress(true);
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+  //     await GoogleSignin.revokeAccess();
+  //     console.warn(userInfo);
+  //   } catch (error) {
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       // User cancelled the login flow
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       console.log(error);
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       console.log(error);
+  //     } else {
+  //       console.log(error);
+  //     }
+  //   } finally {
+  //     setSignInInProgress(false); // Reset the flag after the sign-in attempt is complete
+  //   }
+  // };
+
+
+  const Stack = createStackNavigator();
   return (
-    <View style={styles.container}>
-      <Pressable style={styles.signupbutton} onPress={signIn}>
-        <Text style={{ color: 'blue', fontSize: 20 }}>Google</Text>
-      </Pressable>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{
+        headerShown: false
+      }}>
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="SpgaToP" component={SpgaToP} />
+        <Stack.Screen name="CgpaToP" component={CgpaToP} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 export default App;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: 15,
-    backgroundColor: '#1f1f1f',
-    alignItems: 'center',
-  },
-  signupbutton: {
-    justifyContent: 'center',
-    backgroundColor: 'pink',
-    width: 300,
-    height: 46,
-    borderRadius: 15,
-    marginTop: 25,
-    alignItems: 'center',
-  },
+
 });
