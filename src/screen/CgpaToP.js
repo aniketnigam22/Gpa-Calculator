@@ -12,6 +12,10 @@ const CgpaToP = () => {
   const [message, setMessage] = useState('')
 
   const calculateSgpa = () => {
+    if (value > 10) {
+      setMessage('Enter valid value')
+      return
+    }
     try {
       if (value > 0) {
         const percentage = value * 9.5
@@ -50,6 +54,7 @@ const CgpaToP = () => {
             setMessage('')
           }}
           keyboardType="numeric"
+          value={value}
         />
         {
           message != ''

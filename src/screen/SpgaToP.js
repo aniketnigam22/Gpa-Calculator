@@ -14,6 +14,10 @@ const SpgaToP = () => {
 
   const calculateSgpa = () => {
     try {
+      if (value > 10) {
+        setMessage('Enter valid value')
+        return
+      }
       if (value > 0) {
         const percentage = value * 9.5
         setSpga(percentage)
@@ -52,6 +56,7 @@ const SpgaToP = () => {
             setMessage('')
           }}
           keyboardType="numeric"
+          value={value}
         />
         {
           message != ''

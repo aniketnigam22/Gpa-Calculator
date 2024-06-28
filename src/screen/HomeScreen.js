@@ -1,28 +1,76 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Header from '../Component/Header/Header'
-import { responsiveHeight, responsiveWidth } from '../common/metrices'
-import { AppStyle } from '../common/AppStyle'
-import CalculateButton from '../Component/CalculateButton/CalculateButton'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import Header from '../Component/Header/Header';
+import { responsiveHeight, responsiveWidth } from '../common/metrices';
+import { AppStyle } from '../common/AppStyle';
+import CalculateButton from '../Component/CalculateButton/CalculateButton';
+import BottomSheet from '@gorhom/bottom-sheet';
+import BottomNav from '../Component/bottomNav/BottomNav';
 
+const HomeScreen = ({ navigation }) => {
+  // ref
+  const bottomSheetRef = useRef(null);
 
-const HomeScreen = ({navigation}) => {
+  // state
+  const [isBottomNavVisible, setIsBottomNavVisible] = useState(true);
+
+  // variables
+  const snapPoints = useMemo(() => ['25%', '50%', '75%'], []);
+
+  // callbacks
+  const handleSheetChanges = useCallback((index) => {
+    console.log('handleSheetChanges', index);
+    if (index === -1) {
+      setIsBottomNavVisible(true);
+    } else {
+      setIsBottomNavVisible(false);
+    }
+  }, []);
+
   return (
-    <View>
+    <View style={styles.mainContainer}>
       <Header headerText={'GPA Calculator'} />
       <View style={styles.gpaHead}>
         <Text style={styles.gpaHeadText}>GPA</Text>
       </View>
 
       <View style={styles.buttonContainer}>
-        <CalculateButton buttonText={'SGPA to %'} navigation={navigation} screenName={'SpgaToP'}/>
-        <CalculateButton buttonText={'CGPA to %'} navigation={navigation} screenName={'CgpaToP'}/>
+        <CalculateButton buttonText={'SGPA to %'} navigation={navigation} screenName={'SpgaToP'} />
+        <CalculateButton buttonText={'CGPA to %'} navigation={navigation} screenName={'CgpaToP'} />
       </View>
-    </View>
-  )
-}
 
-export default HomeScreen
+      <View style={styles.buttonContainer}>
+        <CalculateButton buttonText={'Find CGPA'} navigation={navigation} screenName={'FindCpga'} />
+        <CalculateButton buttonText={'% to GPA'} navigation={navigation} screenName={'PercentageToGpa'} />
+      </View>
+
+      {isBottomNavVisible && (
+        <View style={styles.bottomnav}>
+          <BottomNav handleSheet={() => {
+            bottomSheetRef.current.snapToIndex(1)
+          }} />
+        </View>
+      )}
+
+      <BottomSheet
+        enablePanDownToClose={true}
+        ref={bottomSheetRef}
+        index={-1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        enableOverDrag={false}
+        handleIndicatorStyle={{ display: "none" }}
+        handleComponent={null}
+      >
+        <View>
+          <Text style={{ color: 'black' }}>Hello</Text>
+        </View>
+      </BottomSheet>
+    </View>
+  );
+};
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   gpaHead: {
@@ -41,8 +89,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginVertical: 10,
-    marginHorizontal: 10
+    marginHorizontal: 25
+  },
+  mainContainer: {
+    flex: 1
+  },
+  bottomnav: {
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: 'absolute'
   }
-})
+});

@@ -8,6 +8,8 @@ import HomeScreen from './src/screen/HomeScreen';
 import OnboardingScreen from './src/screen/OnboardingScreen';
 import SpgaToP from './src/screen/SpgaToP';
 import CgpaToP from './src/screen/CgpaToP';
+import FindCpga from './src/screen/FindCpga';
+import PercentageToGpa from './src/screen/PercentageToGpa';
 
 const App = () => {
   // const [signInInProgress, setSignInInProgress] = useState(false);
@@ -59,6 +61,9 @@ const App = () => {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="SpgaToP" component={SpgaToP} />
         <Stack.Screen name="CgpaToP" component={CgpaToP} />
+        <Stack.Screen name="FindCpga" component={FindCpga} />
+        <Stack.Screen name="PercentageToGpa" component={PercentageToGpa} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
