@@ -44,6 +44,20 @@ const HomeScreen = ({ navigation }) => {
         <CalculateButton buttonText={'% to GPA'} navigation={navigation} screenName={'PercentageToGpa'} />
       </View>
 
+      <View style={styles.gpaHead2}>
+        <Text style={styles.gpaHeadText}>Currency Conversion</Text>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <CalculateButton buttonText={'USD'} navigation={navigation} screenName={'ToUsd'} />
+        <CalculateButton buttonText={'Japan'} navigation={navigation} screenName={'ToJapan'} />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <CalculateButton buttonText={'Swiss'} navigation={navigation} screenName={'ToSwiss'} />
+        <CalculateButton buttonText={'Europe'} navigation={navigation} screenName={'ToEurope'} />
+      </View>
+
       {isBottomNavVisible && (
         <View style={styles.bottomnav}>
           <BottomNav handleSheet={() => {
@@ -101,5 +115,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     position: 'absolute'
-  }
+  },
+  gpaHead2: {
+    borderWidth: 1,
+    width: responsiveWidth(125),
+    height: responsiveHeight(25),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: AppStyle.headingRadius,
+    borderColor: AppStyle.themeColor,
+    margin: 20,
+  },
 });

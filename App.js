@@ -10,6 +10,10 @@ import SpgaToP from './src/screen/SpgaToP';
 import CgpaToP from './src/screen/CgpaToP';
 import FindCpga from './src/screen/FindCpga';
 import PercentageToGpa from './src/screen/PercentageToGpa';
+import ToUsd from './src/screen/Currency/ToUsd';
+import ToEurope from './src/screen/Currency/ToEurope';
+import ToJapan from './src/screen/Currency/ToJapan';
+import ToSwiss from './src/screen/Currency/ToSwiss';
 
 const App = () => {
   // const [signInInProgress, setSignInInProgress] = useState(false);
@@ -63,6 +67,11 @@ const App = () => {
         <Stack.Screen name="CgpaToP" component={CgpaToP} />
         <Stack.Screen name="FindCpga" component={FindCpga} />
         <Stack.Screen name="PercentageToGpa" component={PercentageToGpa} />
+        <Stack.Screen name="ToUsd" component={ToUsd} />
+        <Stack.Screen name="ToEurope" component={ToEurope} />
+        <Stack.Screen name="ToJapan" component={ToJapan} />
+        <Stack.Screen name="ToSwiss" component={ToSwiss} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

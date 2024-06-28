@@ -1,37 +1,73 @@
 import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../Component/Header/Header'
 import { ScrollView } from 'react-native-gesture-handler'
+import { AppStyle } from '../common/AppStyle'
+import { responsiveHeight, responsiveWidth } from '../common/metrices'
+
 
 
 const FindCpga = () => {
 
     const [semester, setSemester] = useState()
-    const [sgpa, setSgpa] = useState()
+    const [sgpa, setSgpa] = useState(null)
     const [errorMessage, setErrorMessage] = useState('')
     const [data, setData] = useState([])
+    const [totalSgpa, setTotalSgpa] = useState(0)
+    const [cgpa, setCgpa] = useState()
+    const [percentage, setPercentage] = useState()
+    const [showResult, setShowResult] = useState(false)
 
     const addData = () => {
-        if (sgpa > 10) {
+        if (sgpa == null || sgpa == undefined) {
+            console.log('spga in addData', sgpa)
             setErrorMessage('Enter valid data')
             return
         }
-        if (sgpa > 0) {
-            setData([...data, { id: data.length + 1, yourSpga: sgpa, Semester: semester }])
-            setSemester()
-            setSgpa()
+        const parsedSgpa = parseFloat(sgpa);
+        if (parsedSgpa > 10 || parsedSgpa <= 0) {
+            setErrorMessage('Enter valid data')
+            return
         }
+        setErrorMessage('')
+        const newData = [...data, { id: data.length + 1, yourSpga: parsedSgpa, Semester: semester }]
+        setData(newData)
+        setSemester('')
+        setSgpa(null)
     }
 
+    const handleDelete = (id) => {
+        const updatedData = data.filter(item => item.id !== id)
+        setData(updatedData);
+    }
 
-    console.log(`Semester: ${semester}`)
-    console.log(`Spga: ${sgpa}`)
+    useEffect(() => {
+        //reduce is a array method that add all the value in array
+        const total = data.reduce((acc, item) => acc + item.yourSpga, 0)
+        const count = data.length;
+
+
+        const average = count > 0 ? total / count : 0;
+        setCgpa(average)
+        setTotalSgpa(total)
+
+        if (cgpa != null || cgpa != undefined) {
+            console.log('finding percentage')
+            const p = cgpa * 9.5
+            setPercentage(p)
+
+        }
+    }, [data, addData])
+
+
+    console.log('semester', semester)
+    console.log('sgpa', sgpa)
     console.log("data", data)
+    console.log('Total spga: - ', totalSgpa)
+    console.log("Your cgpa: ", cgpa);
+    console.log('percengae : ', percentage);
     return (
-
-
-        <View style={styles.container}>
-
+        <>
             <Header headerText={'Find CGPA'} />
             <ScrollView>
                 <View style={styles.inputContainer}>
@@ -47,21 +83,30 @@ const FindCpga = () => {
                     <View style={styles.border}></View>
                     <Text style={styles.inputContainerText}>Sgpa:</Text>
                     <TextInput
-                        placeholder='0'
+                        placeholder='Ex: 8.42'
                         placeholderTextColor='grey'
                         style={styles.input2}
                         value={sgpa}
                         onChangeText={(value) => {
                             setSgpa(value)
+                            setErrorMessage('')
+                            setShowResult(false)
                         }}
+                        keyboardType='numeric'
                     />
                 </View>
+
+                {
+                    errorMessage != ''
+                    &&
+                    <Text style={styles.errorStyle}>{errorMessage}</Text>
+                }
 
                 <TouchableOpacity onPress={() => {
                     addData()
                 }}>
                     <View style={styles.addSemester}>
-                        <Text style={styles.addSemesterText}>Add Semester</Text>
+                        <Text style={styles.addSemesterText}>+ Add Semester</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -71,18 +116,74 @@ const FindCpga = () => {
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item, index }) => {
                             return (
-                                <View style={styles.listContainer}>
-                                    <Text style={styles.semesterData}>{item.Semester}</Text>
-                                    <View style={styles.border}></View>
-                                    <Text style={styles.input2}>{item.yourSpga}</Text>
-                                </View>
+                                <>
+                                    <View style={styles.listMainContainer}>
+                                        <View style={styles.listContainer}>
+                                            <Text style={styles.semesterData}>Semester:   {item.Semester}</Text>
+                                            <View style={styles.border}></View>
+                                            <Text style={styles.input2}>Sgpa:   {item.yourSpga}</Text>
+                                        </View>
+                                        <TouchableOpacity onPress={() => handleDelete(item.id)}>
+                                            <View style={styles.deleteContainer}><Text style={{ color: 'red', fontSize: 15 }}>X</Text></View>
+                                        </TouchableOpacity>
+                                    </View>
+                                </>
                             )
                         }}
                     />
                 </View>
-            </ScrollView>
 
-        </View>
+                <View style={styles.mainButton}>
+                    <TouchableOpacity onPress={() => {
+                        setShowResult(false)
+                        setData([])
+                        setErrorMessage('')
+                        setPercentage(null)
+                        setCgpa(null)
+                    }}>
+                        <View style={styles.reset}>
+                            <Text style={{ color: AppStyle.themeColor, fontSize: 15 }}>Reset</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => {
+                        setShowResult(true)
+
+                    }} >
+                        <View style={styles.calculate}>
+                            <Text style={{ color: 'white', fontSize: 15 }}>Calculate</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.resultContainer}>
+                    <View style={styles.resultPercentage}>
+                        {
+                            showResult == true
+                                ?
+                                <Text style={{ color: AppStyle.themeColor, fontSize: 15, marginLeft: 10, fontWeight: '700' }}>{`Percentage: ${percentage}`}</Text>
+                                :
+                                <Text style={{ color: AppStyle.themeColor, fontSize: 15, marginLeft: 10 }}>{`Percentage:`}</Text>
+
+                        }
+                    </View>
+                    <View style={styles.resultBorder}></View>
+                    <View style={styles.resultCgpa}>
+                        {
+                            showResult == true
+                                ?
+                                <Text style={{ color: AppStyle.themeColor, fontSize: 15, marginLeft: 10, fontWeight: 700 }}>{`Cgpa: ${cgpa}`}</Text>
+                                :
+                                <Text style={{ color: AppStyle.themeColor, fontSize: 15, marginLeft: 10, fontWeight: 700 }}>{`Cgpa: `}</Text>
+                        }
+
+                    </View>
+                </View>
+
+
+            </ScrollView>
+        </>
+
 
     )
 }
@@ -97,7 +198,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         marginHorizontal: 25,
-        marginRight: 50,
+        // marginRight: 50,
         borderRadius: 10,
         marginVertical: 14
     },
@@ -124,17 +225,18 @@ const styles = StyleSheet.create({
     },
     addSemester: {
         // backgroundColor:'red',
-        width: '60%',
-        height: 75,
-        marginHorizontal: 50,
+        // width: '60%',
+        height: 45,
+        marginHorizontal: 40,
         borderRadius: 10,
         borderStyle: 'dotted',
         borderWidth: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderColor: AppStyle.themeColor
     },
     addSemesterText: {
-        color: 'black'
+        color: AppStyle.themeColor
     },
     listContainer: {
         flexDirection: 'row',
@@ -145,12 +247,94 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginVertical: 14,
         height: 40,
+        flex: 1
     },
     semesterData: {
         flex: 1.5,
         color: 'black',
         marginLeft: 10
+    },
+    deleteContainer: {
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+        borderColor: 'red',
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    listMainContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 16
+    },
+    calculate: {
+        width: responsiveWidth(130),
+        height: responsiveHeight(40),
+        backgroundColor: AppStyle.themeColor,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+
+    },
+    reset: {
+        width: responsiveWidth(130),
+        height: responsiveHeight(40),
+        // backgroundColor: 'red',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: AppStyle.themeColor
+    },
+    mainButton: {
+        flexDirection: 'row',
+        width: '100%',
+        // backgroundColor: 'green',
+        justifyContent: 'space-evenly',
+        marginVertical: 20
+    },
+    resultContainer: {
+        height: responsiveHeight(50),
+        // width:'80%',
+        borderRadius: 2,
+        // backgroundColor: 'red',
+        marginHorizontal: 25,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: AppStyle.themeColor,
+        flexDirection: 'row',
+        // alignItems:'center',
+        // justifyContent:'center',
+        marginBottom: 50
+    },
+    resultBorder: {
+        borderLeftWidth: 3,
+        height: '100%',
+        marginRight: 10,
+        // flex: 1,
+        borderColor: AppStyle.themeColor,
+
+    },
+    resultPercentage: {
+        flex: 2,
+        // backgroundColor:'green',
+        justifyContent: 'center'
+    },
+    resultCgpa: {
+        flex: 2,
+        // backgroundColor:'blue'
+        justifyContent: 'center'
+
+    },
+    errorStyle: {
+        color: 'red',
+        marginHorizontal: 20,
+        fontSize: 15,
+        fontWeight: '600',
+        marginBottom: 10
     }
+
 })
 
 export default FindCpga
