@@ -93,7 +93,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Saved')}>
             <View style={styles.bottomSheetButton}>
               <Text style={styles.sheetText}> ⇣     Saved</Text>
             </View>

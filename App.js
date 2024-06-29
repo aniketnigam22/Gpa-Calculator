@@ -16,6 +16,8 @@ import ToJapan from './src/screen/Currency/ToJapan';
 import ToSwiss from './src/screen/Currency/ToSwiss';
 import Discount from './src/screen/General/Discount';
 import GeneralPer from './src/screen/General/GeneralPer';
+import Saved from './src/screen/Saved';
+import { fetchData, initDatabase, insertData } from './src/common/database';
 
 const App = () => {
   // const [signInInProgress, setSignInInProgress] = useState(false);
@@ -55,7 +57,11 @@ const App = () => {
   //   }
   // };
 
-
+  useEffect(() => {
+    // initDatabase()
+    insertData('aniket',8)
+    fetchData()
+  }, [])
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
@@ -75,6 +81,7 @@ const App = () => {
         <Stack.Screen name="ToSwiss" component={ToSwiss} />
         <Stack.Screen name="Discount" component={Discount} />
         <Stack.Screen name="GeneralPer" component={GeneralPer} />
+        <Stack.Screen name="Saved" component={Saved} />
       </Stack.Navigator>
     </NavigationContainer>
   );

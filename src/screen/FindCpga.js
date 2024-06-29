@@ -5,10 +5,14 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { AppStyle } from '../common/AppStyle'
 import { responsiveHeight, responsiveWidth } from '../common/metrices'
 
+import { db, initDatabase } from '../common/database'
+
 
 
 
 const FindCpga = () => {
+
+    // initDatabase();
 
     const [semester, setSemester] = useState()
     const [sgpa, setSgpa] = useState(null)
@@ -58,6 +62,24 @@ const FindCpga = () => {
             setPercentage(p)
 
         }
+
+        // if (cgpa != null) {
+        //     db.transaction((tx) => {
+        //         tx.executeSql(
+        //             'INSERT INTO cgpa (cgpa) VALUES (?);',
+        //             [cgpa],
+        //             (tx, results) => {
+        //                 if (results.rowsAffected > 0) {
+        //                     console.log('CGPA saved successfully');
+        //                 } else {
+        //                     console.log('Failed to save CGPA');
+        //                 }
+        //             }
+        //         );
+        //     });
+        // }
+
+
     }, [data, addData])
 
 
