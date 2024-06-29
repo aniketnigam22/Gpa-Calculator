@@ -14,6 +14,8 @@ import ToUsd from './src/screen/Currency/ToUsd';
 import ToEurope from './src/screen/Currency/ToEurope';
 import ToJapan from './src/screen/Currency/ToJapan';
 import ToSwiss from './src/screen/Currency/ToSwiss';
+import Discount from './src/screen/General/Discount';
+import GeneralPer from './src/screen/General/GeneralPer';
 
 const App = () => {
   // const [signInInProgress, setSignInInProgress] = useState(false);
@@ -71,8 +73,8 @@ const App = () => {
         <Stack.Screen name="ToEurope" component={ToEurope} />
         <Stack.Screen name="ToJapan" component={ToJapan} />
         <Stack.Screen name="ToSwiss" component={ToSwiss} />
-
-
+        <Stack.Screen name="Discount" component={Discount} />
+        <Stack.Screen name="GeneralPer" component={GeneralPer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

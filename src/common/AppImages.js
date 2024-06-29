@@ -4,6 +4,8 @@ export const AppImages = {
     onBoarding3: require('../assets/Images/sgpa.png'),
     calHeader: require('../assets/Images/calHeader.png'),
     drawerr: require('../assets/Images/drawer.png'),
+    dropDown: require('../assets/Images/dropDown.png'),
+
 
 
 }

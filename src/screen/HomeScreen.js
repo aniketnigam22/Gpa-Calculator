@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
   const [isBottomNavVisible, setIsBottomNavVisible] = useState(true);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '50%', '75%'], []);
+  const snapPoints = useMemo(() => ['25%', '40%'], []);
 
   // callbacks
   const handleSheetChanges = useCallback((index) => {
@@ -58,6 +58,15 @@ const HomeScreen = ({ navigation }) => {
         <CalculateButton buttonText={'Europe'} navigation={navigation} screenName={'ToEurope'} />
       </View>
 
+      <View style={styles.gpaHead3}>
+        <Text style={styles.gpaHeadText}>General</Text>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <CalculateButton buttonText={'Discount'} navigation={navigation} screenName={'Discount'} />
+        <CalculateButton buttonText={'General %'} navigation={navigation} screenName={'GeneralPer'} />
+      </View>
+
       {isBottomNavVisible && (
         <View style={styles.bottomnav}>
           <BottomNav handleSheet={() => {
@@ -76,8 +85,42 @@ const HomeScreen = ({ navigation }) => {
         handleIndicatorStyle={{ display: "none" }}
         handleComponent={null}
       >
-        <View>
-          <Text style={{ color: 'black' }}>Hello</Text>
+        <View style={styles.sheetContainer}>
+          <View style={styles.sheetLine}></View>
+          <TouchableOpacity>
+            <View style={styles.bottomSheetButton}>
+              <Text style={styles.sheetText}>★    Rate us</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={styles.bottomSheetButton}>
+              <Text style={styles.sheetText}> ⇣     Saved</Text>
+            </View>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity>
+            <View style={styles.bottomSheetButton}>
+              <Text style={styles.sheetText}>☏    Contact Us</Text>
+            </View>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity>
+            <View style={styles.bottomSheetButton}>
+              <Text style={styles.sheetText}>❤    Favourites</Text>
+            </View>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity>
+            <View style={styles.bottomSheetButton}>
+              <Text style={styles.sheetText}> +     More Apps</Text>
+            </View>
+          </TouchableOpacity>
+
+
         </View>
       </BottomSheet>
     </View>
@@ -118,7 +161,7 @@ const styles = StyleSheet.create({
   },
   gpaHead2: {
     borderWidth: 1,
-    width: responsiveWidth(125),
+    width: responsiveWidth(155),
     height: responsiveHeight(25),
     justifyContent: 'center',
     alignItems: 'center',
@@ -126,4 +169,32 @@ const styles = StyleSheet.create({
     borderColor: AppStyle.themeColor,
     margin: 20,
   },
+  gpaHead3: {
+    borderWidth: 1,
+    width: responsiveWidth(100),
+    height: responsiveHeight(25),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: AppStyle.headingRadius,
+    borderColor: AppStyle.themeColor,
+    margin: 20,
+  },
+  sheetContainer: {
+    marginHorizontal: 30
+  },
+  sheetLine: {
+    borderTopWidth: 5,
+    borderRadius: 30,
+    borderColor: "lightgray",
+    marginTop: 10,
+    marginHorizontal: 60,
+    marginBottom: 10
+  },
+  bottomSheetButton: {
+    marginTop: 20
+  },
+  sheetText: {
+    color: 'black',
+    fontSize: 17
+  }
 });

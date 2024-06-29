@@ -10,6 +10,7 @@ const BottomNav = ({ handleSheet }) => {
             <TouchableOpacity onPress={handleSheet} style={styles.drawerContainer}>
                 <Image source={AppImages.drawerr} style={styles.drawer} />
             </TouchableOpacity>
+            <Text style={styles.text}>Thank you for using our App :)</Text>
         </View>
     );
 }
@@ -22,8 +23,9 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 20,
         elevation: 20,
-        justifyContent: 'center',
-        alignItems: 'flex-start', // Align items to the start of the container
+        justifyContent: 'space-between',
+        alignItems: 'center', // Align items to the start of the container
+        flexDirection: 'row'
     },
     drawer: {
         height: 30,
@@ -33,10 +35,16 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         marginLeft: 20,
-        backgroundColor: 'transparent', // Set background to transparent
+        backgroundColor: 'transparent', 
         justifyContent: 'center',
         alignItems: 'center',
     },
+    text: {
+        color: 'black',
+        marginRight: 20,
+        fontSize:16,
+        fontWeight:'600'
+    }
 });
 
 export default BottomNav;
