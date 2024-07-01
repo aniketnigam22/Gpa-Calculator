@@ -31,6 +31,7 @@ const Saved = () => {
       );
     });
   };
+  
   const deleteData = (id) => {
     db.transaction((tx) => {
       tx.executeSql(

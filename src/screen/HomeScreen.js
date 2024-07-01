@@ -67,6 +67,21 @@ const HomeScreen = ({ navigation }) => {
         <CalculateButton buttonText={'General %'} navigation={navigation} screenName={'GeneralPer'} />
       </View>
 
+      <View style={styles.gpaHead3}>
+        <Text style={styles.gpaHeadText}>Time Zone</Text>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <CalculateButton buttonText={'USA'} navigation={navigation} screenName={'UsaTime'} />
+        <CalculateButton buttonText={'Japan'} navigation={navigation} screenName={'JapanTime'} />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <CalculateButton buttonText={'Swiss'} navigation={navigation} screenName={'SwissTime'} />
+        <CalculateButton buttonText={'England'} navigation={navigation} screenName={'EuropeTime'} />
+      </View>
+
+
       {isBottomNavVisible && (
         <View style={styles.bottomnav}>
           <BottomNav handleSheet={() => {

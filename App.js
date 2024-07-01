@@ -18,6 +18,10 @@ import Discount from './src/screen/General/Discount';
 import GeneralPer from './src/screen/General/GeneralPer';
 import Saved from './src/screen/Saved';
 import { fetchData, initDatabase, insertData } from './src/common/database';
+import EuropeTime from './src/screen/TimeZone/EuropeTime';
+import JapanTime from './src/screen/TimeZone/JapanTime';
+import SwissTime from './src/screen/TimeZone/SwissTime';
+import UsaTime from './src/screen/TimeZone/UsaTime';
 
 const App = () => {
   // const [signInInProgress, setSignInInProgress] = useState(false);
@@ -82,6 +86,10 @@ const App = () => {
         <Stack.Screen name="Discount" component={Discount} />
         <Stack.Screen name="GeneralPer" component={GeneralPer} />
         <Stack.Screen name="Saved" component={Saved} />
+        <Stack.Screen name="EuropeTime" component={EuropeTime} />
+        <Stack.Screen name="JapanTime" component={JapanTime} />
+        <Stack.Screen name="SwissTime" component={SwissTime} />
+        <Stack.Screen name="UsaTime" component={UsaTime} />
       </Stack.Navigator>
     </NavigationContainer>
   );
