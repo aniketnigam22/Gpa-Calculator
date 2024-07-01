@@ -4,16 +4,17 @@ import { responsiveHeight, responsiveWidth } from '../../common/metrices'
 import { AppImages } from '../../common/AppImages'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const CalculateButton = ({ buttonText, navigation, screenName }) => {
+const CalculateButton = ({ buttonText, navigation, screenName, image }) => {
     const handlePress = () => {
         navigation.navigate(screenName);
     }
+    console.log('image', image)
     return (
         <TouchableOpacity onPress={() => {
             handlePress()
         }}>
             <View style={styles.container}>
-                <Image source={AppImages.calHeader} style={styles.buttonImg} />
+                <Image source={image == undefined ? AppImages.calHeader : image} style={styles.buttonImg} />
                 <Text style={styles.buttonText}>{buttonText}</Text>
             </View>
         </TouchableOpacity>

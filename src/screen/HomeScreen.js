@@ -6,6 +6,7 @@ import { AppStyle } from '../common/AppStyle';
 import CalculateButton from '../Component/CalculateButton/CalculateButton';
 import BottomSheet from '@gorhom/bottom-sheet';
 import BottomNav from '../Component/bottomNav/BottomNav';
+import { AppImages } from '../common/AppImages';
 
 const HomeScreen = ({ navigation }) => {
   // ref
@@ -49,13 +50,13 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <CalculateButton buttonText={'USD'} navigation={navigation} screenName={'ToUsd'} />
-        <CalculateButton buttonText={'Japan'} navigation={navigation} screenName={'ToJapan'} />
+        <CalculateButton buttonText={'USD'} navigation={navigation} screenName={'ToUsd'} image={AppImages.currency} />
+        <CalculateButton buttonText={'Japan'} navigation={navigation} screenName={'ToJapan'} image={AppImages.currency} />
       </View>
 
       <View style={styles.buttonContainer}>
-        <CalculateButton buttonText={'Swiss'} navigation={navigation} screenName={'ToSwiss'} />
-        <CalculateButton buttonText={'Europe'} navigation={navigation} screenName={'ToEurope'} />
+        <CalculateButton buttonText={'Swiss'} navigation={navigation} screenName={'ToSwiss'} image={AppImages.currency} />
+        <CalculateButton buttonText={'Europe'} navigation={navigation} screenName={'ToEurope'} image={AppImages.currency} />
       </View>
 
       <View style={styles.gpaHead3}>
@@ -72,13 +73,13 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <CalculateButton buttonText={'USA'} navigation={navigation} screenName={'UsaTime'} />
-        <CalculateButton buttonText={'Japan'} navigation={navigation} screenName={'JapanTime'} />
+        <CalculateButton buttonText={'USA'} navigation={navigation} screenName={'UsaTime'}  image={AppImages.time}/>
+        <CalculateButton buttonText={'Japan'} navigation={navigation} screenName={'JapanTime'} image={AppImages.time} />
       </View>
 
       <View style={styles.buttonContainer}>
-        <CalculateButton buttonText={'Swiss'} navigation={navigation} screenName={'SwissTime'} />
-        <CalculateButton buttonText={'England'} navigation={navigation} screenName={'EuropeTime'} />
+        <CalculateButton buttonText={'Swiss'} navigation={navigation} screenName={'SwissTime'} image={AppImages.time} />
+        <CalculateButton buttonText={'England'} navigation={navigation} screenName={'EuropeTime'} image={AppImages.time} />
       </View>
 
 

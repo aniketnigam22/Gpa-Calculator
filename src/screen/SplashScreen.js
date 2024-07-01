@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppImages } from '../common/AppImages';
 
 const SplashScreen = ({ navigation }) => {
 
@@ -23,14 +24,15 @@ const SplashScreen = ({ navigation }) => {
 
         setTimeout(() => {
             handleNavigate()
-        }, 2000);
+        }, 700);
 
     }, [])
 
 
     return (
         <View style={styles.container}>
-            <Text style={styles.mainContent}>SplashScreen</Text>
+            {/* <Text style={styles.mainContent}>SplashScreen</Text> */}
+            <Image source={AppImages.logo}  style={styles.mainContent}/>
         </View>
     )
 }
@@ -42,8 +44,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     mainContent: {
-        color: 'black',
-        fontSize: 20
+       height:200,
+       width:200
     }
 })
 
