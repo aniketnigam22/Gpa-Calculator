@@ -58,9 +58,9 @@ const App = () => {
   // };
 
   useEffect(() => {
-    // initDatabase()
-    insertData('aniket',8)
-    fetchData()
+    initDatabase()
+    // insertData('aniket',8)
+    // fetchData()
   }, [])
   const Stack = createStackNavigator();
   return (

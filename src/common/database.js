@@ -1,5 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+// import { useSafeAreaFrame } from 'react-native-safe-area-context';
 import SQLite from 'react-native-sqlite-storage';
+
+
 
 // Function to handle SQL errors
 function errorCB(err) {
@@ -57,16 +60,22 @@ const insertData = (name, cgpaValue) => {
 // Function to fetch data from cgpa table
 const fetchData = () => {
     db.transaction((tx) => {
-        tx.executeSql(
+       return tx.executeSql(
             'SELECT * FROM cgpa;',
             [],
             (tx, results) => {
-                var len = results.rows.length;
-                for (let i = 0; i < len; i++) {
-                  let row = results.rows.item(i);
-                  console.log(`Record: id=${row.id}, name=${row.name}, cgpa=${row.cgpa}`);
-                }
-                console.log(results.rows?.item(4));
+                // var len = results.rows.length;
+                // for (let i = 0; i < len; i++) {
+                //     let row = results.rows.item(i);
+                //     const object = {
+                //         id: row.id,
+                //         name: row.name,
+                //         cgpa: row.cgpa
+                //     }
+               
+                // }
+                return results
+                // console.log(results.rows?.item(4));
             },
             errorCB
         );

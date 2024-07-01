@@ -1,18 +1,15 @@
-import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../Component/Header/Header'
 import { ScrollView } from 'react-native-gesture-handler'
 import { AppStyle } from '../common/AppStyle'
 import { responsiveHeight, responsiveWidth } from '../common/metrices'
-
-import { db, initDatabase } from '../common/database'
+import { fetchData, insertData } from '../common/database'
 
 
 
 
 const FindCpga = () => {
-
-    // initDatabase();
 
     const [semester, setSemester] = useState()
     const [sgpa, setSgpa] = useState(null)
@@ -22,6 +19,29 @@ const FindCpga = () => {
     const [cgpa, setCgpa] = useState()
     const [percentage, setPercentage] = useState()
     const [showResult, setShowResult] = useState(false)
+    const [showModel, setShowModel] = useState(false)
+    const [name, setName] = useState('')
+    const [showNameModal, setShowNameModal] = useState(false);
+
+    const handleSaveResult = () => {
+        setShowResult(false); // Hide the "Save Result" button
+        setShowNameModal(true); // Open the name modal
+    };
+
+
+    const handleSaveName = () => {
+        console.log('name for saving', name)
+        console.log('cgpa for saving', cgpa)
+        insertData(name, cgpa)
+        console.log('data saved')
+        setShowNameModal(false);
+    };
+
+    const handleCloseModal = () => {
+        setShowNameModal(false);
+        setName('')
+    };
+
 
     const addData = () => {
         if (sgpa == null || sgpa == undefined) {
@@ -53,7 +73,7 @@ const FindCpga = () => {
 
 
         const average = count > 0 ? total / count : 0;
-        setCgpa(average)
+        setCgpa(average.toFixed(2))
         setTotalSgpa(total)
 
         if (cgpa != null || cgpa != undefined) {
@@ -63,24 +83,8 @@ const FindCpga = () => {
 
         }
 
-        // if (cgpa != null) {
-        //     db.transaction((tx) => {
-        //         tx.executeSql(
-        //             'INSERT INTO cgpa (cgpa) VALUES (?);',
-        //             [cgpa],
-        //             (tx, results) => {
-        //                 if (results.rowsAffected > 0) {
-        //                     console.log('CGPA saved successfully');
-        //                 } else {
-        //                     console.log('Failed to save CGPA');
-        //                 }
-        //             }
-        //         );
-        //     });
-        // }
-
-
     }, [data, addData])
+
 
 
     console.log('semester', semester)
@@ -89,6 +93,7 @@ const FindCpga = () => {
     console.log('Total spga: - ', totalSgpa)
     console.log("Your cgpa: ", cgpa);
     console.log('percengae : ', percentage);
+    console.log('name', name)
     return (
         <>
             <Header headerText={'Find CGPA'} />
@@ -202,6 +207,51 @@ const FindCpga = () => {
 
                     </View>
                 </View>
+
+                {
+                    showResult == true
+                    &&
+
+                    <TouchableOpacity onPress={handleSaveResult}>
+                        <View style={styles.addSemester}>
+                            <Text style={styles.addSemesterText}>Save Result</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                }
+
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={showNameModal}
+                    onRequestClose={handleCloseModal}
+
+                >
+                    <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5 )" }}>
+                        <View style={styles.modalContainer} >
+                            <Text style={styles.modalTitle}>Enter Name</Text>
+                            <TextInput
+                                style={styles.modalInput}
+                                placeholder="Enter your name"
+                                onChangeText={(value) => {
+                                    setName(value)
+                                }}
+                                value={name} // Pre-fill with current name state
+                                placeholderTextColor={'grey'}
+                            />
+                            <View style={styles.modalButtonContainer}>
+                                <TouchableOpacity style={styles.modalButton} onPress={handleCloseModal}>
+                                    <Text style={styles.modalButtonText}>Cancel</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.modalButton} onPress={handleSaveName}>
+                                    <Text style={styles.modalButtonText}>Save</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
 
 
             </ScrollView>
@@ -356,7 +406,50 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '600',
         marginBottom: 10
-    }
+    },
+    modalContainer: {
+        // flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+        backgroundColor: 'white',
+        width: 300,
+        height: 300,
+        borderColor: AppStyle.themeColor,
+        borderWidth: 2,
+        borderRadius: 10,
+        position: 'absolute',
+        top: '30%',
+        left: 50
+    },
+    modalTitle: {
+        fontSize: 20,
+        marginBottom: 10,
+        color: 'black'
+    },
+    modalInput: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: AppStyle.themeColor,
+        borderRadius: 10,
+        marginBottom: 10,
+        width: '80%',
+        color: 'black'
+    },
+    modalButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    modalButton: {
+        padding: 10,
+        backgroundColor: AppStyle.themeColor,
+        borderRadius: 5,
+        margin: 5,
+    },
+    modalButtonText: {
+        fontSize: 16,
+        color: "white"
+    },
 
 })
 
